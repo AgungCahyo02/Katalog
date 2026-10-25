@@ -1,7 +1,19 @@
 /* ==========================================================================
    SPERILAP - Toko Komponen & Sparepart Laptop Original
-   Interactive Client Script (Modern Vanilla JS - Light/Dark Theme & Smart Search)
+   Interactive Client Script (Modern Vanilla JS - Solid Green Theme & Clean SVG Icons)
    ========================================================================== */
+
+/* ===== SVG Icons Dictionary (Replaces All Cartoonish Emojis) ===== */
+const ICONS = {
+  check: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  checkLg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  warn: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
+  star: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
+  search: `<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`,
+  cart: `<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>`,
+  sun: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`,
+  moon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`
+};
 
 /* ===== Data Produk Komponen Laptop ===== */
 const products = [
@@ -178,7 +190,6 @@ function initTheme() {
   const currentTheme = saved || (prefersDark ? "dark" : "light");
   applyTheme(currentTheme, false);
 
-  // Pantau perubahan mode sistem jika pengguna belum memilih preferensi eksplisit
   if (window.matchMedia) {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
       if (!getSavedTheme()) {
@@ -190,7 +201,6 @@ function initTheme() {
 
 function applyTheme(theme, showNotice = true) {
   document.documentElement.setAttribute("data-theme", theme);
-  // Simpan hanya jika pengguna memilih sendiri lewat tombol tema
   if (showNotice) { try { localStorage.setItem("sp_theme", theme); } catch (e) {} }
   
   const themeToggle = $("#themeToggle");
@@ -200,7 +210,7 @@ function applyTheme(theme, showNotice = true) {
   }
 
   if (showNotice) {
-    toast(theme === "dark" ? "Mode Gelap aktif" : "Mode Terang aktif", theme === "dark" ? "🌙" : "☀️");
+    toast(theme === "dark" ? "Mode Gelap aktif" : "Mode Terang aktif", theme === "dark" ? ICONS.moon : ICONS.sun);
   }
 }
 
@@ -210,12 +220,12 @@ function toggleTheme() {
   applyTheme(target, true);
 }
 
-/* ===== Toast Notification ===== */
+/* ===== Toast Notification (Clean SVG Icons) ===== */
 let toastTimer;
-function toast(msg, icon = "✓") {
+function toast(msg, icon = ICONS.check) {
   const t = $("#toast");
   if (!t) return;
-  t.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+  t.innerHTML = `<span style="display:inline-flex; align-items:center;">${icon}</span> <span>${msg}</span>`;
   t.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
@@ -258,7 +268,6 @@ function renderGrid() {
 
   const q = state.q.trim().toLowerCase();
 
-  // Tampilkan/sembunyikan tombol clear search
   if (clearBtn) clearBtn.hidden = !state.q;
 
   // Filter produk dengan pencarian kata kunci yang akurat & batas kata utuh (word boundary)
@@ -270,7 +279,7 @@ function renderGrid() {
     // 2. Jika tidak ada kata kunci pencarian, lolos
     if (!q) return true;
 
-    // Pecah kata kunci menjadi beberapa token kata (contoh: "ram 8gb" -> ["ram", "8gb"])
+    // Pecah kata kunci menjadi token kata
     const tokens = q.split(/\s+/).filter(Boolean);
     const primaryText = `${p.name} ${p.brand} ${p.cat} ${p.tags.join(" ")}`.toLowerCase();
     const secondaryText = `${p.desc} ${p.specs.join(" ")}`.toLowerCase();
@@ -289,7 +298,7 @@ function renderGrid() {
       // Cek kecocokan nama kategori persis
       if (p.cat.toLowerCase() === token) return true;
 
-      // Cek pada deskripsi & spesifikasi detail (hindari kecocokan semu untuk kata kategori kunci)
+      // Cek pada deskripsi & spesifikasi detail
       const coreKeywords = ["ram", "ssd", "baterai", "charger", "pasta"];
       if (!coreKeywords.includes(token)) {
         if (wordRegex.test(secondaryText)) return true;
@@ -323,14 +332,13 @@ function renderGrid() {
     resetBtn.hidden = (state.cat === "Semua" && !q);
   }
 
-  // Perbarui status aktif pada tombol Cari Cepat
   updateShortcutTagsUI();
 
   // Render HTML Cards
   if (!list.length) {
     grid.innerHTML = `
       <div class="empty">
-        <div class="empty-icon">🔍</div>
+        <div class="empty-icon">${ICONS.search}</div>
         <h4>Komponen tidak ditemukan</h4>
         <p>Tidak ada produk yang cocok dengan pencarian "<b>${esc(state.q)}</b>"${state.cat !== "Semua" ? ` pada kategori ${esc(state.cat)}` : ""}. Coba kata kunci lain atau reset filter.</p>
         <button class="btn btn-outline" data-reset-all type="button">Lihat Semua Komponen</button>
@@ -365,7 +373,7 @@ function renderGrid() {
           </div>
 
           <div class="card-meta">
-            <span class="rating-star">★ ${p.rating}</span>
+            <span class="rating-star">${ICONS.star} <span>${p.rating}</span></span>
             <span class="sold-text">(${p.sold} terjual)</span>
           </div>
 
@@ -403,7 +411,7 @@ function animateCartBadge() {
   const badges = $$(".badge");
   badges.forEach(b => {
     b.classList.remove("bump");
-    void b.offsetWidth; // trigger reflow
+    void b.offsetWidth;
     b.classList.add("bump");
     setTimeout(() => b.classList.remove("bump"), 250);
   });
@@ -415,14 +423,14 @@ function addToCart(id, n = 1) {
   if (!p || !p.stock) return;
 
   if (cur + n > p.stock) {
-    return toast(`Stok ${p.name} hanya tersisa ${p.stock}`, "⚠️");
+    return toast(`Stok ${p.name} hanya tersisa ${p.stock}`, ICONS.warn);
   }
 
   cart[id] = cur + n;
   save();
   renderCart();
   animateCartBadge();
-  toast(`${p.name} ditambahkan`);
+  toast(`${p.name} ditambahkan`, ICONS.check);
 }
 
 function setQty(id, qty) {
@@ -430,7 +438,7 @@ function setQty(id, qty) {
   if (qty <= 0) {
     delete cart[id];
   } else if (p && qty > p.stock) {
-    return toast(`Stok hanya tersisa ${p.stock}`, "⚠️");
+    return toast(`Stok hanya tersisa ${p.stock}`, ICONS.warn);
   } else {
     cart[id] = qty;
   }
@@ -443,7 +451,6 @@ function renderCart() {
   const totalQty = lines.reduce((sum, line) => sum + line.qty, 0);
   const t = totals();
 
-  // Header badges & labels
   const cartCountEl = $("#cartCount");
   const drawerBadge = $("#drawerBadge");
   const mcbCount = $("#mcbCount");
@@ -453,17 +460,17 @@ function renderCart() {
   if (cartCountEl) cartCountEl.textContent = totalQty;
   if (drawerBadge) drawerBadge.textContent = `${totalQty} item`;
 
-  // Free shipping progress bar
+  // Free shipping progress bar (Solid Green Indicator)
   const freeShipText = $("#freeShipText");
   const freeShipBar = $("#freeShipBar");
   if (freeShipText && freeShipBar) {
     const percent = Math.min(100, Math.round((t.sub / FREE_SHIP) * 100));
     freeShipBar.style.width = percent + "%";
     if (t.sub >= FREE_SHIP) {
-      freeShipText.innerHTML = `🎉 <b>Selamat!</b> Pesananmu mendapatkan <b>Bebas Ongkir</b>`;
+      freeShipText.innerHTML = `${ICONS.check} <span><b>Selamat!</b> Pesananmu mendapatkan <b>Bebas Ongkir</b></span>`;
     } else {
       const remaining = FREE_SHIP - t.sub;
-      freeShipText.innerHTML = `Belanja <b>${rp(remaining)}</b> lagi untuk <b>Bebas Ongkir</b>`;
+      freeShipText.innerHTML = `<span>Belanja <b>${rp(remaining)}</b> lagi untuk <b>Bebas Ongkir</b></span>`;
     }
   }
 
@@ -484,7 +491,7 @@ function renderCart() {
     if (!lines.length) {
       itemsContainer.innerHTML = `
         <div class="empty" style="padding:40px 16px; margin-top:20px">
-          <div class="empty-icon">🛒</div>
+          <div class="empty-icon">${ICONS.cart}</div>
           <h4>Keranjang Belanja Kosong</h4>
           <p>Belum ada komponen laptop yang kamu pilih. Temukan RAM, SSD, atau baterai yang pas!</p>
           <button class="btn btn-primary" data-close type="button">Mulai Belanja</button>
@@ -526,7 +533,7 @@ function renderCart() {
         </div>
         <div class="sum-row">
           <span>Ongkos Kirim</span>
-          <span>${t.ship === 0 ? '<b style="color:var(--emerald)">Gratis</b>' : rp(t.ship)}</span>
+          <span>${t.ship === 0 ? '<b style="color:var(--primary)">Gratis</b>' : rp(t.ship)}</span>
         </div>
         <div class="sum-row total-row">
           <span>Total Pembayaran</span>
@@ -595,14 +602,17 @@ function showProduct(id) {
         </div>
 
         <h2 class="detail-title">${esc(p.name)}</h2>
-        <div class="detail-meta">★ ${p.rating} · ${p.sold} terjual · 100% Original</div>
+        <div class="detail-meta">
+          <span class="rating-star">${ICONS.star} <span>${p.rating}</span></span>
+          <span style="margin-left:6px;">· ${p.sold} terjual · 100% Original Bergaransi</span>
+        </div>
 
         <p class="detail-desc">${esc(p.desc)}</p>
 
         <div class="detail-specs-box">
           <h4>Spesifikasi Komponen</h4>
           <ul>
-            ${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}
+            ${p.specs.map(s => `<li><span class="spec-check-icon">${ICONS.check}</span> <span>${esc(s)}</span></li>`).join("")}
           </ul>
         </div>
 
@@ -626,7 +636,7 @@ function showProduct(id) {
 
 function showCheckout() {
   const lines = cartLines();
-  if (!lines.length) return toast("Keranjang belanja masih kosong", "⚠️");
+  if (!lines.length) return toast("Keranjang belanja masih kosong", ICONS.warn);
 
   const t = totals();
   openDrawer(false);
@@ -664,7 +674,7 @@ function showCheckout() {
         <div class="form-group">
           <label for="fHp">Nomor WhatsApp Aktif</label>
           <input id="fHp" name="hp" type="tel" required pattern="[0-9+ ]{9,16}" placeholder="08123456789" autocomplete="tel">
-          <span class="form-note">Konfirmasi resi dan status garansi akan dikirim via WA.</span>
+          <span class="form-note">Konfirmasi resi dan status garansi akan dikirim via WhatsApp.</span>
         </div>
 
         <div class="form-group">
@@ -693,7 +703,7 @@ function showCheckout() {
 
 function sendWhatsAppOrder() {
   const lines = cartLines();
-  if (!lines.length) return toast("Keranjang kosong", "⚠️");
+  if (!lines.length) return toast("Keranjang kosong", ICONS.warn);
   const t = totals();
 
   let msg = `*Halo Sperilap, saya mau pesan komponen berikut:*\n\n`;
@@ -714,18 +724,15 @@ function placeOrder(form) {
   const orderNo = "SP-" + Date.now().toString().slice(-7);
   const lines = cartLines();
 
-  // Update stok lokal
   lines.forEach(({ p, qty }) => {
     p.stock = Math.max(0, p.stock - qty);
   });
 
-  // Kosongkan keranjang
   cart = {};
   save();
   renderCart();
   renderGrid();
 
-  // Pesan WhatsApp konfirmasi
   let waMsg = `*Konfirmasi Pesanan Baru #${orderNo}*\n`;
   waMsg += `Nama: ${d.nama}\n`;
   waMsg += `Alamat: ${d.alamat}\n`;
@@ -740,12 +747,12 @@ function placeOrder(form) {
 
   openModal(`
     <div class="order-success-box">
-      <div class="success-badge">✓</div>
+      <div class="success-badge">${ICONS.checkLg}</div>
       <h2>Pesanan Berhasil Dibuat!</h2>
       <div class="order-code">Nomor Pesanan: ${orderNo}</div>
       <p class="success-meta">
         Terima kasih, <b>${esc(d.nama)}</b>. Pesananmu telah terdaftar dengan metode <b>${esc(d.bayar)}</b>.<br>
-        Tim Sperilap akan segera memproses pengecekan fisik komponen dan mengemas paket dengan bubble wrap aman.
+        Tim Sperilap akan segera memproses pengecekan fisik komponen dan mengemas paket dengan bubble wrap tebal.
       </p>
 
       <div class="success-actions">
@@ -762,16 +769,13 @@ function placeOrder(form) {
 
 /* ===== Event Listeners ===== */
 document.addEventListener("DOMContentLoaded", () => {
-  // Inisialisasi tema tampilan (Dark / Light)
   initTheme();
 
-  // Tombol Toggle Tema
   const themeToggle = $("#themeToggle");
   if (themeToggle) {
     themeToggle.addEventListener("click", toggleTheme);
   }
 
-  // Sticky Header Scroll Shadow & Scroll To Top
   window.addEventListener("scroll", () => {
     const topbar = $("#topbar");
     const scrollTopBtn = $("#scrollTopBtn");
@@ -781,7 +785,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scrollTopBtn) scrollTopBtn.hidden = window.scrollY < 300;
   }, { passive: true });
 
-  // Scroll to Top Click
   const scrollTopBtn = $("#scrollTopBtn");
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", () => {
@@ -789,19 +792,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Delegasi Event Klik
   document.addEventListener("click", e => {
     const getEl = selector => e.target.closest(selector);
     let el;
 
-    // Filter Kategori Chips
     if ((el = getEl("[data-cat]"))) {
       state.cat = el.dataset.cat;
       renderFilters();
       renderGrid();
-    }
-    // Navigasi Kategori dari Footer
-    else if ((el = getEl("[data-cat-nav]"))) {
+    } else if ((el = getEl("[data-cat-nav]"))) {
       state.cat = el.dataset.catNav;
       state.q = "";
       const searchInput = $("#search");
@@ -809,37 +808,30 @@ document.addEventListener("DOMContentLoaded", () => {
       renderFilters();
       renderGrid();
       $("#katalog")?.scrollIntoView({ behavior: "smooth" });
-    }
-    // Tombol Pintasan "Cari Cepat" (Dengan toggle on/off & pembersihan filter silang)
-    else if ((el = getEl("[data-search]"))) {
+    } else if ((el = getEl("[data-search]"))) {
       const term = el.dataset.search.trim();
       const searchInput = $("#search");
 
-      // Jika tombol yang sama diklik lagi saat sudah aktif, matikan pencarian (toggle off)
       if (state.q.toLowerCase() === term.toLowerCase()) {
         state.q = "";
         if (searchInput) searchInput.value = "";
       } else {
         state.q = term;
-        state.cat = "Semua"; // Reset kategori agar tidak menyaring silang produk
+        state.cat = "Semua";
         if (searchInput) searchInput.value = term;
       }
 
       renderFilters();
       renderGrid();
       $("#katalog")?.scrollIntoView({ behavior: "smooth" });
-    }
-    // Tombol Reset Semua Filter
-    else if (getEl("[data-reset-all]") || getEl("#resetFilterBtn")) {
+    } else if (getEl("[data-reset-all]") || e.target.id === "resetFilterBtn") {
       state.cat = "Semua";
       state.q = "";
       const searchInput = $("#search");
       if (searchInput) searchInput.value = "";
       renderFilters();
       renderGrid();
-    }
-    // Tombol Bersihkan Input Pencarian (✕)
-    else if (getEl("#clearSearch")) {
+    } else if (e.target.id === "clearSearch") {
       state.q = "";
       const searchInput = $("#search");
       if (searchInput) {
@@ -847,9 +839,7 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.focus();
       }
       renderGrid();
-    }
-    // Aksi Kartu Produk & Keranjang
-    else if ((el = getEl("[data-view]"))) {
+    } else if ((el = getEl("[data-view]"))) {
       showProduct(+el.dataset.view);
     } else if ((el = getEl("[data-add]"))) {
       addToCart(+el.dataset.add);
@@ -870,12 +860,11 @@ document.addEventListener("DOMContentLoaded", () => {
       closeModal();
     } else if (e.target.id === "backdrop") {
       openDrawer(false);
-    } else if (getEl("#cartBtn") || getEl("#mcbBtn")) {
+    } else if (e.target.id === "cartBtn" || getEl("#mcbBtn")) {
       openDrawer(true);
     }
   });
 
-  // Pencarian Manual & Pengurutan
   const searchInput = $("#search");
   if (searchInput) {
     searchInput.addEventListener("input", e => {
@@ -892,7 +881,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Submit Checkout Form
   document.addEventListener("submit", e => {
     if (e.target.id === "checkoutForm") {
       e.preventDefault();
@@ -900,7 +888,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Tombol Keyboard Escape
   document.addEventListener("keydown", e => {
     if (e.key === "Escape") {
       closeModal();
@@ -908,7 +895,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Inisialisasi awal render katalog & keranjang
   renderFilters();
   renderGrid();
   renderCart();
