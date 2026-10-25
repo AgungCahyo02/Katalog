@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Sperilap – Toko spesialis komponen, sparepart & aksesoris laptop original. Upgrade RAM, SSD, ganti baterai, charger, dan thermal paste bergaransi resmi.">
+  <meta name="theme-color" content="#0f172a">
+  <title>Sperilap – Spesialis Komponen &amp; Sparepart Laptop Original</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem("sp_theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = saved || (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="announcement" aria-label="Informasi Toko">
+    <div class="wrap ann-content">
+      <div class="ann-marquee">
+        <span class="ann-item">🚚 <b>Bebas Ongkir</b> se-Indonesia min. Rp500.000</span>
+        <span class="ann-sep">•</span>
+        <span class="ann-item">🛡️ <b>100% Produk Original</b> &amp; Bergaransi Resmi</span>
+        <span class="ann-sep">•</span>
+        <span class="ann-item">⚡ <b>Pengiriman Cepat</b> Order sebelum 15.00 WIB dikirim hari ini</span>
+        <span class="ann-sep">•</span>
+        <span class="ann-item">🔧 <b>Konsultasi Kompatibilitas</b> Gratis via WhatsApp</span>
+      </div>
+      <div class="ann-links">
+        <a href="https://wa.me/6281234567890?text=Halo%20Sperilap%2C%20saya%20mau%20konsultasi%20komponen%20laptop" target="_blank" rel="noopener" class="ann-wa">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          Tanya Teknisi
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sticky Header -->
+  <header class="topbar" id="topbar">
+    <div class="wrap bar">
+      <a class="logo" href="#" aria-label="Sperilap Beranda">
+        <img src="Logo-Sperilap.jpg" alt="Logo Sperilap" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='images/Logo-Sperilap.jpg';}">
+        <span class="logo-text">
+          <strong>Sperilap</strong>
+          <small>Laptop Spares</small>
+        </span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="search" type="search" placeholder="Cari RAM, SSD, baterai, thermal paste..." aria-label="Cari komponen laptop" autocomplete="off">
+        <button id="clearSearch" class="clear-search" type="button" aria-label="Hapus pencarian" hidden>✕</button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Theme Toggle Button -->
+        <button id="themeToggle" class="btn-theme" type="button" aria-label="Ganti mode gelap/terang" title="Ganti mode gelap/terang">
+          <svg class="theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <a href="https://wa.me/6281234567890?text=Halo%20Sperilap%2C%20saya%20butuh%20bantuan%20cek%20kompatibilitas%20laptop" target="_blank" rel="noopener" class="btn-wa-header" aria-label="Konsultasi WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <span>Konsultasi</span>
+        </a>
+        
+        <button id="cartBtn" class="btn-cart" type="button" aria-label="Buka keranjang belanja">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="cart-label">Keranjang</span>
+          <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <div class="hero-pill">
+          <span class="pulse-dot"></span>
+          <span>Stok Sparepart Ready &amp; Siap Kirim Hari Ini</span>
+        </div>
+        <h1>Toko Komponen &amp; Sparepart Laptop Original</h1>
+        <p>Solusi laptop lemot, penyimpanan penuh, baterai bocor, atau panas berlebih. Komponen pilihan teruji kompatibilitasnya dengan garansi resmi hingga 5 tahun.</p>
+        
+        <div class="hero-actions">
+          <a href="#katalog" class="btn btn-primary">
+            Jelajahi Katalog
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <a href="https://wa.me/6281234567890?text=Halo%20Sperilap%2C%20mau%20tanya%20upgrade%20komponen%20laptop" target="_blank" rel="noopener" class="btn btn-outline">
+            Cek Kompatibilitas
+          </a>
+        </div>
+
+        <!-- Quick Tags -->
+        <div class="hero-shortcuts" role="group" aria-label="Pencarian cepat">
+          <span class="shortcut-label">Cari Cepat:</span>
+          <button class="shortcut-tag" type="button" data-search="RAM">RAM Laptop</button>
+          <button class="shortcut-tag" type="button" data-search="SSD">SSD NVMe</button>
+          <button class="shortcut-tag" type="button" data-search="Baterai">Baterai HP</button>
+          <button class="shortcut-tag" type="button" data-search="Thermal">Pasta Termal</button>
+          <button class="shortcut-tag" type="button" data-search="Charger">Charger</button>
+        </div>
+      </div>
+
+      <!-- Trust Badges List -->
+      <div class="hero-perks">
+        <div class="perk-card">
+          <div class="perk-icon">🛡️</div>
+          <div class="perk-body">
+            <h3>100% Produk Original</h3>
+            <p>Langsung dari distributor resmi, diuji fungsi sebelum pengiriman.</p>
+          </div>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">📦</div>
+          <div class="perk-body">
+            <h3>Garansi Tukar Baru</h3>
+            <p>Klaim garansi mudah &amp; proses cepat tanpa dipersulit.</p>
+          </div>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">🚚</div>
+          <div class="perk-body">
+            <h3>Bebas Ongkir</h3>
+            <p>Otomatis gratis ongkos kirim untuk belanja min. Rp500.000.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalog Section -->
+  <main id="katalog" class="wrap catalog-section">
+    <!-- Section Header & Filter Toolbar -->
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Katalog Komponen</h2>
+        <p class="section-desc">Pilih kategori komponen yang sesuai dengan spesifikasi laptopmu</p>
+      </div>
+      <div class="toolbar-sort">
+        <label for="sort" class="sort-label">Urutkan:</label>
+        <div class="select-wrap">
+          <select id="sort" aria-label="Urutkan produk">
+            <option value="populer">Terlaris (Populer)</option>
+            <option value="murah">Harga Terendah</option>
+            <option value="mahal">Harga Tertinggi</option>
+            <option value="rating">Rating Tertinggi</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Chips Toolbar -->
+    <div class="toolbar">
+      <div id="filters" class="chips" role="group" aria-label="Kategori komponen"></div>
+    </div>
+
+    <!-- Active Filter Info -->
+    <div class="catalog-status">
+      <p id="info" class="info"></p>
+      <button id="resetFilterBtn" class="reset-filter-btn" type="button" hidden>✕ Reset Pencarian</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="grid" class="grid" aria-live="polite"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="wrap foot-content">
+      <div class="foot-col foot-brand">
+        <div class="foot-logo">
+          <img src="Logo-Sperilap.jpg" alt="Sperilap Logo" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='images/Logo-Sperilap.jpg';}">
+          <div>
+            <h3>Sperilap</h3>
+            <p>Laptop Components &amp; Spares</p>
+          </div>
+        </div>
+        <p class="foot-desc">Pusat penyedia komponen laptop terpercaya. Melayani pembelian retail dan teknisi dengan jaminan keaslian dan garansi resmi.</p>
+        <div class="foot-contact">
+          <span>💬 WhatsApp: <b>0812-3456-7890</b></span>
+          <span>⏰ Jam Kerja: <b>Senin – Sabtu, 09.00 – 17.00 WIB</b></span>
+          <span>📍 Pengiriman: <b>Jakarta &amp; Seluruh Indonesia</b></span>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h4>Kategori Populer</h4>
+        <ul class="foot-links">
+          <li><button type="button" class="foot-btn" data-cat-nav="RAM">RAM DDR3 / DDR4 / DDR5</button></li>
+          <li><button type="button" class="foot-btn" data-cat-nav="Penyimpanan">SSD NVMe &amp; SATA</button></li>
+          <li><button type="button" class="foot-btn" data-cat-nav="Baterai & Charger">Baterai Laptop &amp; Charger</button></li>
+          <li><button type="button" class="foot-btn" data-cat-nav="Pendingin">Thermal Paste &amp; Cooling</button></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Metode Pembayaran</h4>
+        <div class="pay-tags">
+          <span class="pay-pill">Transfer BCA</span>
+          <span class="pay-pill">Mandiri</span>
+          <span class="pay-pill">BRI</span>
+          <span class="pay-pill">BNI</span>
+          <span class="pay-pill">QRIS Instant</span>
+          <span class="pay-pill">COD (Bayar di Tempat)</span>
+        </div>
+
+        <h4 style="margin-top:20px">Jasa Ekspedisi</h4>
+        <div class="pay-tags">
+          <span class="pay-pill">JNE Express</span>
+          <span class="pay-pill">J&amp;T</span>
+          <span class="pay-pill">SiCepat</span>
+          <span class="pay-pill">Anteraja</span>
+          <span class="pay-pill">GoSend / Grab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="wrap foot-bottom-inner">
+        <p>&copy; 2026 Sperilap. Hak cipta dilindungi. Komponen laptop bergaransi resmi.</p>
+        <p class="foot-safe">🛡️ Pembayaran &amp; Data Pelanggan Aman Terenkripsi</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Mobile Cart Bar -->
+  <div id="mobileCartBar" class="mobile-cart-bar" hidden>
+    <div class="mcb-info">
+      <span id="mcbCount">0 barang</span>
+      <b id="mcbTotal">Rp 0</b>
+    </div>
+    <button id="mcbBtn" class="btn btn-primary" type="button">
+      Lihat Keranjang
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+
+  <!-- Floating Scroll To Top -->
+  <button id="scrollTopBtn" class="scroll-top-btn" type="button" aria-label="Kembali ke atas" hidden>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- Backdrop -->
+  <div id="backdrop" class="backdrop" hidden></div>
+
+  <!-- Cart Drawer -->
+  <aside id="drawer" class="drawer" aria-label="Keranjang belanja" aria-hidden="true">
+    <div class="drawer-head">
+      <div class="drawer-title-wrap">
+        <h2>Keranjang Belanja</h2>
+        <span id="drawerBadge" class="drawer-count-badge">0 item</span>
+      </div>
+      <button class="x-btn" data-close type="button" aria-label="Tutup keranjang">✕</button>
+    </div>
+
+    <!-- Free Shipping Indicator -->
+    <div id="freeShipBox" class="freeship-box">
+      <div class="freeship-text" id="freeShipText">Belanja Rp500.000 lagi untuk Bebas Ongkir</div>
+      <div class="freeship-track">
+        <div id="freeShipBar" class="freeship-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div id="cartItems" class="drawer-body"></div>
+    <div id="cartFoot" class="drawer-foot"></div>
+  </aside>
+
+  <!-- Modal (Product Detail & Checkout) -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <div class="modal-drag-handle" aria-hidden="true"></div>
+      <button class="x-btn modal-close-btn" data-close type="button" aria-label="Tutup popup">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
