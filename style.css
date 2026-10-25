@@ -14,6 +14,7 @@
   --ink-900: #0f172a;
   --ink-800: #1e293b;
   --ink-700: #334155;
+  --ink-600: #475569;
   --ink-500: #64748b;
   --ink-400: #94a3b8;
   
@@ -48,7 +49,7 @@
   --header-height: 70px;
   --ann-height: 36px;
   --topbar-bg: rgba(255, 255, 255, 0.95);
-  --hero-grad: linear-gradient(180deg, #ffffff 0%, var(--bg-page) 100%);
+  --hero-grad: #ffffff;
 }
 
 /* ===== CSS Variables: Dark Theme ===== */
@@ -62,6 +63,7 @@
   --ink-900: #f8fafc;
   --ink-800: #f1f5f9;
   --ink-700: #cbd5e1;
+  --ink-600: #b4c0d0;
   --ink-500: #94a3b8;
   --ink-400: #64748b;
   
@@ -87,7 +89,7 @@
   --shadow-xl: 0 20px 35px rgba(0, 0, 0, 0.65);
 
   --topbar-bg: rgba(15, 23, 42, 0.94);
-  --hero-grad: linear-gradient(180deg, #131d2e 0%, var(--bg-page) 100%);
+  --hero-grad: #131d2e;
 }
 
 /* ==========================================================================
@@ -247,7 +249,8 @@ img {
   height: 40px;
   width: auto;
   border-radius: var(--radius-sm);
-  background: #ffffff;
+  background: #0f172a;
+  padding: 4px 10px;
 }
 
 .logo-text {
@@ -980,6 +983,7 @@ img {
   cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   height: 38px;
@@ -1233,7 +1237,7 @@ img {
 
 .freeship-fill {
   height: 100%;
-  background: linear-gradient(90deg, #0284c7, #059669);
+  background: var(--primary);
   transition: width 0.3s ease;
   border-radius: 999px;
 }

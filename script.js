@@ -170,8 +170,10 @@ const state = {
 const cats = ["Semua", ...new Set(products.map(p => p.cat))];
 
 /* ===== Dark / Light Mode System ===== */
+const getSavedTheme = () => { try { return localStorage.getItem("sp_theme"); } catch (e) { return null; } };
+
 function initTheme() {
-  const saved = localStorage.getItem("sp_theme");
+  const saved = getSavedTheme();
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const currentTheme = saved || (prefersDark ? "dark" : "light");
   applyTheme(currentTheme, false);
@@ -179,7 +181,7 @@ function initTheme() {
   // Pantau perubahan mode sistem jika pengguna belum memilih preferensi eksplisit
   if (window.matchMedia) {
     window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
-      if (!localStorage.getItem("sp_theme")) {
+      if (!getSavedTheme()) {
         applyTheme(e.matches ? "dark" : "light", false);
       }
     });
@@ -188,7 +190,8 @@ function initTheme() {
 
 function applyTheme(theme, showNotice = true) {
   document.documentElement.setAttribute("data-theme", theme);
-  try { localStorage.setItem("sp_theme", theme); } catch (e) {}
+  // Simpan hanya jika pengguna memilih sendiri lewat tombol tema
+  if (showNotice) { try { localStorage.setItem("sp_theme", theme); } catch (e) {} }
   
   const themeToggle = $("#themeToggle");
   if (themeToggle) {
@@ -827,7 +830,7 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#katalog")?.scrollIntoView({ behavior: "smooth" });
     }
     // Tombol Reset Semua Filter
-    else if (getEl("[data-reset-all]") || e.target.id === "resetFilterBtn") {
+    else if (getEl("[data-reset-all]") || getEl("#resetFilterBtn")) {
       state.cat = "Semua";
       state.q = "";
       const searchInput = $("#search");
@@ -836,7 +839,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderGrid();
     }
     // Tombol Bersihkan Input Pencarian (✕)
-    else if (e.target.id === "clearSearch") {
+    else if (getEl("#clearSearch")) {
       state.q = "";
       const searchInput = $("#search");
       if (searchInput) {
@@ -867,7 +870,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closeModal();
     } else if (e.target.id === "backdrop") {
       openDrawer(false);
-    } else if (e.target.id === "cartBtn" || getEl("#mcbBtn")) {
+    } else if (getEl("#cartBtn") || getEl("#mcbBtn")) {
       openDrawer(true);
     }
   });
