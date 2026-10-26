@@ -899,3 +899,19 @@ document.addEventListener("DOMContentLoaded", () => {
   renderGrid();
   renderCart();
 });
+
+/* ===== Loading Screen ===== */
+(function () {
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+  const shownAt = Date.now();
+  const hide = () => {
+    const wait = Math.max(0, 700 - (Date.now() - shownAt));
+    setTimeout(() => {
+      loader.classList.add("done");
+      setTimeout(() => loader.remove(), 700);
+    }, wait);
+  };
+  if (document.readyState === "complete") hide();
+  else window.addEventListener("load", hide);
+})();
